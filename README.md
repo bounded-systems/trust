@@ -16,7 +16,7 @@ shows wins isn't a ledger, it's marketing.
 
 - **[CLAIMS.md](./CLAIMS.md)** — the full claims ledger (Enforced / Partial / Gap / Design-only, with evidence).
 - **[SECURITY.md](./SECURITY.md)** — how to report a vulnerability.
-- **Hosted:** [trust.bounded.tools](https://trust.bounded.tools) *(deploy pending — see [site/DEPLOY.md](./site/DEPLOY.md), bead `prx-iu7r`)*.
+- **Hosted:** [trust.bounded.tools](https://trust.bounded.tools) — live (Cloudflare Worker `bounded-tools-trust`; see [site/DEPLOY.md](./site/DEPLOY.md)).
 
 ## How claims are graded
 
