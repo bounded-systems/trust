@@ -1,0 +1,14 @@
+{
+  // Static-assets Worker for trust.bounded.tools — serves the built dist/ folder.
+  // Sibling of the bounded-tools-site worker (same Cloudflare account).
+  // Build:  node build.mjs        (assembles dist/ from public/)
+  // Deploy: wrangler deploy
+  // Then bind the custom domain trust.bounded.tools in the Cloudflare dashboard.
+  "name": "bounded-tools-trust",
+  "account_id": "a2ca40f474fa65ed8f751a3efdf74c01",
+  "compatibility_date": "2026-06-21",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}

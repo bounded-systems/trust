@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bounded Systems · Trust Center</title>
+<meta name="description" content="A public, grep-verifiable claims ledger. Trust you can verify, not trust you take on faith.">
+<style>
+  :root { --fg:#1a1a1a; --dim:#5a5a5a; --bg:#fbfbf9; --line:#e3e1da; --accent:#0b5; --warn:#c80; --gap:#c33; }
+  @media (prefers-color-scheme: dark) {
+    :root { --fg:#e8e6e0; --dim:#9a978f; --bg:#141414; --line:#2c2c2c; --accent:#3d9; --warn:#db4; --gap:#e66; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+    font:16px/1.6 ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    -webkit-font-smoothing:antialiased; }
+  main { max-width:46rem; margin:0 auto; padding:4rem 1.4rem 6rem; }
+  h1 { font-size:1.5rem; letter-spacing:-.02em; margin:0 0 .2rem; }
+  .tag { color:var(--dim); margin:0 0 2.5rem; font-size:.95rem; }
+  h2 { font-size:1rem; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--dim); margin:2.6rem 0 .8rem; }
+  p { margin:.8rem 0; }
+  a { color:var(--fg); text-underline-offset:3px; text-decoration-thickness:1px; }
+  a:hover { color:var(--accent); }
+  ul { padding-left:1.1rem; }
+  li { margin:.35rem 0; }
+  code { background:color-mix(in srgb, var(--fg) 8%, transparent);
+    padding:.1em .4em; border-radius:3px; font-size:.88em; }
+  pre { background:color-mix(in srgb, var(--fg) 6%, transparent);
+    border:1px solid var(--line); border-radius:6px; padding:1rem;
+    overflow-x:auto; font-size:.82rem; line-height:1.5; }
+  .legend { list-style:none; padding:0; border:1px solid var(--line);
+    border-radius:8px; overflow:hidden; }
+  .legend li { display:flex; gap:.8rem; padding:.7rem 1rem; margin:0;
+    border-top:1px solid var(--line); align-items:baseline; }
+  .legend li:first-child { border-top:0; }
+  .legend b { flex:0 0 6.5rem; }
+  .cta { display:inline-block; margin:.4rem .6rem .4rem 0; padding:.55rem 1rem;
+    border:1px solid var(--line); border-radius:7px; text-decoration:none; }
+  .cta:hover { border-color:var(--accent); }
+  footer { margin-top:4rem; padding-top:1.4rem; border-top:1px solid var(--line);
+    color:var(--dim); font-size:.85rem; }
+  .e{color:var(--accent)} .w{color:var(--warn)} .g{color:var(--gap)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Bounded Systems · Trust Center</h1>
+  <p class="tag">Trust you can <strong>verify</strong>, not trust you take on faith.</p>
+
+  <p>Most trust centers point at an auditor's attestation — <em>"a third party
+  checked our process once."</em> Bounded Systems is built the other way around.
+  Its security properties are <strong>mechanisms in the code</strong>: capability
+  seams, policy tables that fail closed, content-addressed provenance. You don't
+  trust a badge — you <code>grep</code> the claim and watch the test fail if it
+  breaks.</p>
+
+  <p>This is the public projection of our internal claims-calibration instrument.
+  Every claim is graded against running code, and <strong>the gaps are listed
+  next to the wins</strong> — because a ledger that only shows wins is marketing,
+  not a ledger.</p>
+
+  <h2>How claims are graded</h2>
+  <ul class="legend">
+    <li><b><span class="e">✅ Enforced</span></b> Checked on a live path, default-on, fails the build/run if broken.</li>
+    <li><b><span class="w">🟡 Partial</span></b> A real check exists but narrower than the prose — opt-in, one layer, or pure-function only.</li>
+    <li><b><span class="g">🔴 Gap</span></b> Intended but no live enforcement yet; tracked as open work.</li>
+    <li><b>📐 Design-only</b> Specced or scaffolded; not yet a working mechanism.</li>
+  </ul>
+  <p>One rule we hold ourselves to: <strong>kinship, not badges.</strong> We say
+  "in-toto–style" and "SLSA-style," and never print a level until the exact
+  formats are emitted and the exact levels met.</p>
+
+  <h2>Read the ledger</h2>
+  <p>
+    <a class="cta" href="https://github.com/bounded-systems/trust/blob/main/CLAIMS.md">📋 Full claims ledger →</a>
+    <a class="cta" href="https://github.com/bounded-systems/trust/blob/main/SECURITY.md">🔒 Report a vulnerability →</a>
+    <a class="cta" href="https://github.com/bounded-systems/trust">⌥ Source on GitHub →</a>
+  </p>
+  <p>The Markdown in the repo is the canonical, version-controlled source of
+  record. This page is a doorway; the ledger is the document.</p>
+
+  <h2>Verify it yourself</h2>
+  <p>Every <span class="e">Enforced</span> row is a <code>grep</code> away. For example:</p>
+  <pre># Policy fails closed: unknown key &rarr; false, never a permissive fallthrough
+grep -n 'allowList ? allowList.includes' policy/src/index.ts
+
+# All published packages opt into npm build provenance
+grep -rlE '"provenance":[[:space:]]*true' --include=package.json . | grep -v node_modules | wc -l
+
+# Capability seams are test-enforced, not merely documented
+find . -name extractability.test.ts -not -path '*/node_modules/*'</pre>
+
+  <footer>
+    Bounded Systems · capability-secured, provenance-tracked agent runtimes.<br>
+    If a graded row drifts from the code, that's a defect —
+    <a href="https://github.com/bounded-systems/trust/blob/main/SECURITY.md">report it</a>.
+  </footer>
+</main>
+</body>
+</html>
