@@ -66,8 +66,8 @@ check it. Open work is linked to its bead id.
 
 | # | Claim | Grade | Evidence | Notes |
 |---|---|---|---|---|
-| 6.1 | git-writes are signed **and verified against their owner**. | 🟡 Partial | `prx` provenance signing; `PRX_REQUIRE_SIGNED_DERIVATIONS` | Signature *validity* is checked; **ownership** is not, on the live path. Verification is opt-in and fail-open, git effects only. |
-| 6.2 | A privileged effect not produced by its owning actor fails verification. | 🔴 Gap | `prx/.../provenance/effect-ownership.ts · verifyEffectOwnership` (defined + exercised only in `value_props.ts` instrument) | **No call site in the merge-guard / publisher path.** Tracked: bead `prx-6s8` (wire it in + default-on signed verification). |
+| 6.1 | git-writes are signed **and verified against their owner**. | 🟡 Partial | `prx` provenance signing; `PRX_REQUIRE_SIGNED_DERIVATIONS` | Ownership is now verified on the live merge gate (row 6.2). Residual gap: verification is still **opt-in and fail-open** by default (git effects only) — making it default-on is the remaining work. |
+| 6.2 | A privileged effect not produced by its owning actor fails verification. | ✅ Enforced | `prx/.../provenance/merge-guard.ts · projectProvenanceAxis` → `verifyEffectOwnership` | Wired into the live merge gate (`canEnterReadyToMerge`): under enforcement, a signature-valid effect whose producer doesn't own it fails closed (`unsigned`). prx#759 (bead `prx-6s8`, closed). Non-effect / non-role producers pass through. |
 | 6.3 | Caveat / attenuation enforcement is by interposition (proxy), not string compare. | 🔴 Gap | bead `prx-yweb` | Open design work. |
 
 ## 7. Operator hygiene
@@ -90,7 +90,7 @@ The meta-claim — *"the public claims match live enforcement"* — is itself tr
 
 - `prx-suz` — Claims calibration: close the gap between repo claims and live enforcement (+ periodic claims audit).
 - `prx-99s` — Re-tier STATUS value props + soften README tagline to match live enforcement.
-- `prx-6s8` — Wire `verifyEffectOwnership` into the merge-guard/publisher path; default-on signed verification.
+- ~~`prx-6s8` — Wire `verifyEffectOwnership` into the merge-guard path~~ ✅ done ([prx#759](https://github.com/bounded-systems/prx/pull/759)). Residual: make signed verification **default-on** (row 6.1) — still opt-in / fail-open.
 - `prx-5yp` — Close the ~13 silent seam violations (`node:fs`/`node:os` outside fs/host) or baseline them explicitly.
 - `prx-w1v` — policy_guard: fail closed on unparseable policed commands + adversarial parser tests.
 - `prx-e7cl` — Keeper/worktree commits unsigned by default — decide on signing by default.

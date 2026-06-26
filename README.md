@@ -48,7 +48,7 @@ substance. Instead we publish the mechanisms below.
 | Content-addressed signed provenance core | ✅ Enforced | Ed25519 over canonical manifests, projected to in-toto/DSSE (`anchored-chain`). |
 | Off-the-shelf verifiability of attestations | 🟡 Partial | Correct formats emitted; external verifier integration not yet wired. |
 | Signed-derivation **verification** in the pipeline | 🟡 Partial | Opt-in (`PRX_REQUIRE_SIGNED_DERIVATIONS`), git effects only, fail-open. |
-| Effect-ownership verification on the live path | 🔴 Gap | `verifyEffectOwnership` exists + tested, but isn't wired into merge/publish (`prx-6s8`). |
+| Effect-ownership verification on the live path | ✅ Enforced | Wired into the merge gate `projectProvenanceAxis`; a signed effect from a non-owning producer fails closed (prx#759). |
 | Seam coverage completeness | 🔴 Gap | ~13 leaf files import `node:fs`/`node:os` outside the fs/host seam (`prx-5yp`). |
 | Operator commit signing on by default | 🟡 By design (tracked) | Disabled at the git seam for headless safety; chain signing is separate (`prx-e7cl`). |
 | Semantic git (AST merge / format enforcement) | 📐 Design-only | `git-ast` parsing/serialization are placeholders. |
