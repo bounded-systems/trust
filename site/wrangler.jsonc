@@ -10,5 +10,10 @@
   "assets": {
     "directory": "./dist",
     "not_found_handling": "single-page-application"
-  }
+  },
+  // Custom domain — wrangler provisions the DNS record automatically because the
+  // bounded.tools zone lives on this same Cloudflare account.
+  "routes": [
+    { "pattern": "trust.bounded.tools", "custom_domain": true }
+  ]
 }
