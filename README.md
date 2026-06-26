@@ -42,7 +42,7 @@ substance. Instead we publish the mechanisms below.
 | Area | Grade | One-line |
 |---|---|---|
 | Capability model (ocap / narrow-only attenuation) | ✅ Enforced (model) | Authority can only be narrowed as it's passed onward — Miller/E lineage. |
-| Policy guard fails **closed** | ✅ Enforced | Unknown tool/state/role → denied; wired as a PreToolUse hook on every command. |
+| Policy guard fails **closed** | ✅ Enforced | Unknown tool/state/role **and unparseable policed commands** → denied; wired as a PreToolUse hook on every command. |
 | Capability seams (single access points) | ✅ Enforced | 22 extractability tests enforce no upward deps / no ambient authority, zero-tolerance. |
 | Supply-chain provenance (npm + JSR) | ✅ Enforced | All 24 published `@bounded-systems` packages set `provenance: true`; 34 JSR OIDC workflows. |
 | Content-addressed signed provenance core | ✅ Enforced | Ed25519 over canonical manifests, projected to in-toto/DSSE (`anchored-chain`). |

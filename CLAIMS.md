@@ -33,7 +33,7 @@ check it. Open work is linked to its bead id.
 | 2.2 | Policy is data: allowlists keyed by tool × state × role; decisions are pure lookups, no ambient authority. | ✅ Enforced | `policy/src/index.ts · POLICY_TABLE` | Table-driven, deterministic. |
 | 2.3 | An agent cannot perform an action its role doesn't own (keeper owns git writes, forge owns gh writes, orchestrator owns nothing). | ✅ Enforced | `prx/.../agents/policy_guard.ts · decideAgentToolCall`; `prx/.../test/agents/policy_guard.test.ts` | Wired as a PreToolUse hook (`prx/.claude/hooks/policy-guard.ts`) — exits non-zero to deny on every command. |
 | 2.4 | Ownership claims in the feature specs match runtime enforcement. | ✅ Enforced | `prx/.../test/agents/capability_feature.test.ts` ("FAITHFUL: a role owns a write iff the predicate allows it") | Faithfulness test compares spec to `isFeasibleForRole`. |
-| 2.5 | Policy guard fails closed on **unparseable** policed commands (not just unknown ones). | 🟡 Partial | bead `prx-w1v` | Open: harden parser + add adversarial fail-closed tests. |
+| 2.5 | Policy guard fails closed on **unparseable** policed commands (not just unknown ones). | ✅ Enforced | `prx/.../agents/policy_guard.ts · decideAgentToolCall` / `parsePolicedCommand` | A policed-tool head with no parseable verb fails closed (policy roles + orchestrator); value-taking options (`git -C`, `gh -R`) no longer let a value masquerade as the verb. prx#760 (bead `prx-w1v`, closed). |
 
 ## 3. Capability seams (single access points)
 
