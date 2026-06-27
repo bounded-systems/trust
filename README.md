@@ -43,13 +43,13 @@ substance. Instead we publish the mechanisms below.
 |---|---|---|
 | Capability model (ocap / narrow-only attenuation) | ✅ Enforced (model) | Authority can only be narrowed as it's passed onward — Miller/E lineage. |
 | Policy guard fails **closed** | ✅ Enforced | Unknown tool/state/role **and unparseable policed commands** → denied; wired as a PreToolUse hook on every command. |
-| Capability seams (single access points) | ✅ Enforced | 22 extractability tests enforce no upward deps / no ambient authority, zero-tolerance. |
+| Capability seams (single access points) | ✅ Enforced | 23 packages prove their seam claim via the shared `@bounded-systems/seam-check` harness — no upward deps / no ambient authority, zero-tolerance. |
 | Supply-chain provenance (npm + JSR) | ✅ Enforced | All 24 published `@bounded-systems` packages set `provenance: true`; 34 JSR OIDC workflows. |
 | Content-addressed signed provenance core | ✅ Enforced | Ed25519 over canonical manifests, projected to in-toto/DSSE (`anchored-chain`). |
 | Off-the-shelf verifiability of attestations | 🟡 Partial | Correct formats emitted; external verifier integration not yet wired. |
 | Signed-derivation **verification** in the pipeline | 🟡 Partial | Opt-in (`PRX_REQUIRE_SIGNED_DERIVATIONS`), git effects only, fail-open. |
 | Effect-ownership verification on the live path | ✅ Enforced | Wired into the merge gate `projectProvenanceAxis`; a signed effect from a non-owning producer fails closed (prx#759). |
-| Seam coverage completeness | 🔴 Gap | ~13 leaf files import `node:fs`/`node:os` outside the fs/host seam (`prx-5yp`). |
+| Seam coverage completeness | ✅ Enforced | All 23 capability packages adopt the shared `@bounded-systems/seam-check` harness; several gained ambient checks they lacked (`prx-5yp`). |
 | Operator commit signing on by default | 🟡 By design (tracked) | Disabled at the git seam for headless safety; chain signing is separate (`prx-e7cl`). |
 | Semantic git (AST merge / format enforcement) | 📐 Design-only | `git-ast` parsing/serialization are placeholders. |
 
