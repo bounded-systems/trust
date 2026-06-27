@@ -46,7 +46,7 @@ substance. Instead we publish the mechanisms below.
 | Capability seams (single access points) | ✅ Enforced | 23 packages prove their seam claim via the shared `@bounded-systems/seam-check` harness — no upward deps / no ambient authority, zero-tolerance. |
 | Supply-chain provenance (npm + JSR) | ✅ Enforced | All 24 published `@bounded-systems` packages set `provenance: true`; 34 JSR OIDC workflows. |
 | Content-addressed signed provenance core | ✅ Enforced | Ed25519 over canonical manifests, projected to in-toto/DSSE (`anchored-chain`). |
-| Off-the-shelf verifiability of attestations | 🟡 Partial | Correct formats emitted; external verifier integration not yet wired. |
+| Off-the-shelf verifiability of attestations | ✅ Enforced | A real envelope verifies under an independent ed25519 impl (`@noble/ed25519`) + a spec-reimplemented DSSE PAE — not our verify code (`prx-5lcd`). |
 | Signed-derivation **verification** in the pipeline | 🟡 Partial | Opt-in (`PRX_REQUIRE_SIGNED_DERIVATIONS`), git effects only, fail-open. |
 | Effect-ownership verification on the live path | ✅ Enforced | Wired into the merge gate `projectProvenanceAxis`; a signed effect from a non-owning producer fails closed (prx#759). |
 | Seam coverage completeness | ✅ Enforced | All 23 capability packages adopt the shared `@bounded-systems/seam-check` harness; several gained ambient checks they lacked (`prx-5yp`). |
