@@ -74,7 +74,7 @@ check it. Open work is linked to its bead id.
 
 | # | Claim | Grade | Evidence | Notes |
 |---|---|---|---|---|
-| 7.1 | Keeper/executor git commits are signed by default. | 🟡 Mechanism enforced; activation pending | `git/src/index.ts` (`PRX_COMMIT_SIGNING_KEY` → SSH-sign commit/tag/commit-tree); `git/src/__tests__/signing.test.ts` | The seam now signs with **our own file-based ed25519 key**, headlessly — never the operator's 1Password agent (which hangs non-interactively). Integration-tested with a real `ssh-keygen` key: the keeper's `commit-tree` lands a genuine SSH signature, unsigned without the key (safe fallback). "By default" becomes true once `PRX_COMMIT_SIGNING_KEY` points at the project key (`github_signing_key`) in the keeper/worktree provisioning — the remaining operational step (bead `prx-e7cl`). The Ed25519 provenance chain stays the primary integrity layer. |
+| 7.1 | Keeper/executor git commits are signed by default. | 🟡 Mechanism enforced; activation pending | `git/src/index.ts` + `signing.test.ts`; `prx/.../provenance/commit-signing-key.ts`; keeper `commit-tree` fail-closed guard | The git seam signs `commit`/`tag`/`commit-tree` with **our own file-based ed25519 key**, headlessly — never the 1Password agent. prx **owns the key internally** (generate-on-first-use under `<state>/prx/signing` via ssh-keygen — never the host `~/.ssh` or a cloud KMS), and the keeper **fails closed** if signing is configured but the commit is unsigned. Integration-tested with a real key. Remaining for default-on ✅: wire the activation into the direct keeper path + **register the prx public key with GitHub** (one-time, for the "Verified" badge). bead `prx-e7cl`. The Ed25519 provenance chain stays the primary integrity layer. |
 
 ## 8. Semantic git
 
