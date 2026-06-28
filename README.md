@@ -27,10 +27,12 @@ shows wins isn't a ledger, it's marketing.
 | 🔴 **Gap** | Intended behavior with no live enforcement (e.g. a pure function with no production call site), tracked as open work. |
 | 📐 **Design-only** | Specced or scaffolded; not yet a working mechanism. |
 
-We follow one rule from our own positioning notes: **kinship, not badges.** We say
-"in-toto–style attestations" and "SLSA-style provenance," and we do *not* print a
-SLSA level or "in-toto compliant" until the exact formats are emitted and the
-exact levels are met. ([positioning.md](../dotgithub/docs/positioning.md))
+We follow one rule from our own positioning notes: **kinship, not badges.** We
+emit the *exact formats* — our attestations are now proven-conformant in-toto
+Statement v1 + SLSA Provenance v1 documents (row 4.5, validated against the
+published specs) — but we still do **not** print a SLSA *level* until the
+build-integrity *requirements* of that level are met. Conformance on the format;
+kinship on the level. ([positioning.md](../dotgithub/docs/positioning.md))
 
 ## Posture at a glance
 
