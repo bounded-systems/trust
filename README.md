@@ -49,7 +49,7 @@ substance. Instead we publish the mechanisms below.
 | Off-the-shelf verifiability of attestations | ✅ Enforced | A real envelope verifies under an independent ed25519 impl (`@noble/ed25519`) + a spec-reimplemented DSSE PAE — not our verify code (`prx-5lcd`). |
 | Signed-derivation **verification** in the pipeline | 🟡 Partial | Opt-in (`PRX_REQUIRE_SIGNED_DERIVATIONS`), git effects only, fail-open. |
 | Effect-ownership verification on the live path | ✅ Enforced | Wired into the merge gate `projectProvenanceAxis`; a signed effect from a non-owning producer fails closed (prx#759). |
-| Seam coverage completeness | ✅ Enforced | All 23 capability packages adopt the shared `@bounded-systems/seam-check` harness; several gained ambient checks they lacked (`prx-5yp`). |
+| Seam coverage completeness | ✅ Enforced | All 23 capability packages adopt the shared `@bounded-systems/seam-check` harness, and a scheduled org-level `seam-coverage` workflow fails CI on any *new* uncovered capability repo (`prx-5yp`). |
 | Operator commit signing on by default | 🟡 Default-on in `main` | The direct keeper path signs by default with prx's OWN internal ed25519 key (not 1Password, not host/cloud); keeper fails closed on unsigned; key generated. Two steps to ✅: register the pubkey with GitHub + roll the build into the installed prx (`prx-e7cl`). |
 | Semantic git (AST merge / format enforcement) | 📐 Design-only | `git-ast` parsing/serialization are placeholders. |
 
