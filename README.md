@@ -53,7 +53,8 @@ substance. Instead we publish the mechanisms below.
 | Effect-ownership verification on the live path | ✅ Enforced | Wired into the merge gate `projectProvenanceAxis`; a signed effect from a non-owning producer fails closed (prx#759). |
 | Seam coverage completeness | ✅ Enforced | 24 capability packages adopt the shared `@bounded-systems/seam-check` harness, and a scheduled org-level `seam-coverage` workflow fails CI on any *new* uncovered capability repo (`prx-5yp`, `prx-w2mf`). |
 | Operator commit signing on by default | ✅ Enforced | The direct keeper path signs by default with prx's OWN internal ed25519 key (not 1Password, not host/cloud); keeper fails closed on unsigned. Deployed: key registered as a GitHub Signing Key + shipped in the installed `prx` v0.16.1. Verified end-to-end — a prx-signed commit reads **Verified** on GitHub (`prx-e7cl`). |
-| Semantic git (AST merge / format enforcement) | 📐 Design-only | `git-ast` parsing/serialization are placeholders. |
+| Semantic git: canonical format enforcement (clean/smudge round-trip) | ✅ Enforced | `git-ast` parses + re-emits a deterministic, idempotent canonical form over Git's real `filter-process` protocol; fail-closed; proven against real `git` (cucumber claims) + CI. Rust on `main` (#26); JSON in review (#27). |
+| Semantic git: AST-level structural merge | 📐 Design-only | `git-ast` diff/merge drivers remain placeholders; gated on stable AST node identity. |
 
 See **[CLAIMS.md](./CLAIMS.md)** for evidence paths and the open beads behind each
 row.

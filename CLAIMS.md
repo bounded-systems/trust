@@ -80,7 +80,8 @@ check it. Open work is linked to its bead id.
 
 | # | Claim | Grade | Evidence | Notes |
 |---|---|---|---|---|
-| 8.1 | AST-level semantic merge / format enforcement. | 📐 Design-only | `git-ast/README.md` (parsing/serialization are placeholders) | Not yet a working tool. Matches the GitAI-prep note: design-only. |
+| 8.1a | Format enforcement: a canonical clean/smudge round-trip, so reformatting never reaches history. | ✅ Enforced | `git-ast` runs Git's real `filter-process` pkt-line protocol; `clean` parses source and stores a **deterministic, idempotent** canonical form, `smudge` returns it, **fail-closed** on parse errors. Proven against real `git` by the cucumber claims suite (`git-ast/tests/features/claims.feature`) + CI (fmt/build/test/clippy). Coverage: **Rust** (Tree-sitter, a documented subset — `git-ast/src/printer.rs`) on `main` (PR #26); **JSON** (`serde_json`, `git-ast/src/json.rs`) broadens it (PR #27, CI-green, in review). | Two differently-formatted-but-equal inputs store byte-identical blobs. The round-trip *mechanism* is enforced; language/construct coverage widens additively. |
+| 8.1b | AST-level **semantic merge** (structural 3-way merge; AST diff/merge drivers). | 📐 Design-only | `git-ast` diff/merge drivers are placeholders; depends on stable AST **node identity** (see the node-identity section in `git-ast/README.md`). | The hard part — tracking a node through moves/renames. Canonical formatting (8.1a) removes formatting churn from history but does **not** yet perform structural merge. |
 
 ---
 
