@@ -74,7 +74,7 @@ check it. Open work is linked to its bead id.
 
 | # | Claim | Grade | Evidence | Notes |
 |---|---|---|---|---|
-| 7.1 | Keeper/executor git commits are signed by default. | ⚙️ By design: **off** (tracked) | `git/src/index.ts:135` (`-c commit.gpgsign=false` on every commit/tag) | Deliberate: operator gpg/ssh signing hangs in headless/agent contexts (GH-388/GH-360). Provenance integrity is carried by the **separate Ed25519 chain signing**, not git's commit signing. Whether to also sign at the operator layer by default is tracked in bead `prx-e7cl`. |
+| 7.1 | Keeper/executor git commits are signed by default. | 🟡 Mechanism enforced; activation pending | `git/src/index.ts` (`PRX_COMMIT_SIGNING_KEY` → SSH-sign commit/tag/commit-tree); `git/src/__tests__/signing.test.ts` | The seam now signs with **our own file-based ed25519 key**, headlessly — never the operator's 1Password agent (which hangs non-interactively). Integration-tested with a real `ssh-keygen` key: the keeper's `commit-tree` lands a genuine SSH signature, unsigned without the key (safe fallback). "By default" becomes true once `PRX_COMMIT_SIGNING_KEY` points at the project key (`github_signing_key`) in the keeper/worktree provisioning — the remaining operational step (bead `prx-e7cl`). The Ed25519 provenance chain stays the primary integrity layer. |
 
 ## 8. Semantic git
 

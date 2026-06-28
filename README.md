@@ -50,7 +50,7 @@ substance. Instead we publish the mechanisms below.
 | Signed-derivation **verification** in the pipeline | 🟡 Partial | Opt-in (`PRX_REQUIRE_SIGNED_DERIVATIONS`), git effects only, fail-open. |
 | Effect-ownership verification on the live path | ✅ Enforced | Wired into the merge gate `projectProvenanceAxis`; a signed effect from a non-owning producer fails closed (prx#759). |
 | Seam coverage completeness | ✅ Enforced | All 23 capability packages adopt the shared `@bounded-systems/seam-check` harness; several gained ambient checks they lacked (`prx-5yp`). |
-| Operator commit signing on by default | 🟡 By design (tracked) | Disabled at the git seam for headless safety; chain signing is separate (`prx-e7cl`). |
+| Operator commit signing on by default | 🟡 Mechanism ready | Signs with our own file-based ed25519 key headlessly (not 1Password) when `PRX_COMMIT_SIGNING_KEY` is set — integration-tested; default-on awaits provisioning that env (`prx-e7cl`). |
 | Semantic git (AST merge / format enforcement) | 📐 Design-only | `git-ast` parsing/serialization are placeholders. |
 
 See **[CLAIMS.md](./CLAIMS.md)** for evidence paths and the open beads behind each
