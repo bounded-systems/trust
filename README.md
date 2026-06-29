@@ -55,7 +55,8 @@ substance. Instead we publish the mechanisms below.
 | Operator commit signing on by default | ✅ Enforced | The direct keeper path signs by default with prx's OWN internal ed25519 key (not 1Password, not host/cloud); keeper fails closed on unsigned. Deployed: key registered as a GitHub Signing Key + shipped in the installed `prx` v0.16.1. Verified end-to-end — a prx-signed commit reads **Verified** on GitHub (`prx-e7cl`). |
 | Semantic git: canonical format enforcement (clean/smudge round-trip) | ✅ Enforced | `git-ast` parses + re-emits a deterministic, idempotent canonical form over Git's real `filter-process` protocol; fail-closed; proven against real `git` (cucumber claims) + CI. Rust and JSON both on `main` (#26, #27). |
 | Semantic git: AST-level structural **merge** | ✅ Enforced | Real structural 3-way merge for JSON — different-key edits merge where a text merge conflicts. Backed **both ways**: *executable* (real `git merge`, PR #28) and *proven* (Mathlib-free **Lean** proof, CI-gated sorry-free, PR #30). Coverage additive (more languages, arrays). |
-| Semantic git: structural **diff** + node identity | 📐 Design-only | `git-ast`'s diff driver is still a placeholder; semantic diff beyond canonical formatting, and tracking a node through moves/renames, await **stable node identity** — the hardest open problem. |
+| Semantic git: structural **diff** | ✅ Enforced | `git-ast`'s diff driver reports JSON changes as object-key paths (added/removed/changed), order-independent; verified against real `git diff` (PR #31). Coverage additive (more languages, arrays). |
+| Semantic git: **node identity** (move/rename tracking) | 📐 Design-only | Tracking a node through a move/rename — refactor-aware history — awaits **stable AST node identity**, the hardest open problem (GumTree-family matching, content-addressed subtrees). |
 
 See **[CLAIMS.md](./CLAIMS.md)** for evidence paths and the open beads behind each
 row.
