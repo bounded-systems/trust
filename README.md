@@ -56,7 +56,7 @@ substance. Instead we publish the mechanisms below.
 | Semantic git: canonical format enforcement (clean/smudge round-trip) | ✅ Enforced | `git-ast` parses + re-emits a deterministic, idempotent canonical form over Git's real `filter-process` protocol; fail-closed; proven against real `git` (cucumber claims) + CI. Rust and JSON both on `main` (#26, #27). |
 | Semantic git: AST-level structural **merge** | ✅ Enforced | Real structural 3-way merge for JSON — different-key edits merge where a text merge conflicts. Backed **both ways**: *executable* (real `git merge`, PR #28) and *proven* (Mathlib-free **Lean** proof, CI-gated sorry-free, PR #30). Coverage additive (more languages, arrays). |
 | Semantic git: structural **diff** | ✅ Enforced | `git-ast`'s diff driver reports JSON changes as object-key paths (added/removed/changed), order-independent; verified against real `git diff` (PR #31). Coverage additive (more languages, arrays). |
-| Semantic git: **node identity** (move/rename tracking) | 🟡 Partial | First slice built: `git-ast match` tracks a function through a rename/reorder/edit by content-addressed hashing (exact matches; PR #32). The hard core — **fuzzy** matching (renamed *and* edited at once, GumTree-family), binding/use-site identity, persistence — remains. |
+| Semantic git: **node identity** (move/rename tracking) | 🟡 Partial | `git-ast match` tracks a function through a rename/reorder/edit (exact, content-addressed; PR #32) *and* through a simultaneous rename-and-edit (fuzzy body similarity; PR #33). The hard core — **structural** fuzzy matching (GumTree tree-edit), binding/use-site identity, persistence — remains. |
 
 See **[CLAIMS.md](./CLAIMS.md)** for evidence paths and the open beads behind each
 row.
