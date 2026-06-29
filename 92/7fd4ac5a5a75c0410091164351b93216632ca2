@@ -1,0 +1,21 @@
+CLAIMS.md
+  s_3afa8ea03cb772::t_a9512f2b9ed7cd 83
+README.md
+  s_3afa8ea03cb772::t_432a87eb7766fc 56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.3",
+  "base_commit_sha": "927fd4ac5a5a75c0410091164351b93216632ca2",
+  "prompts": {},
+  "sessions": {
+    "s_3afa8ea03cb772": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "0e8b57ee-3d61-44b0-b33b-c3f276b478fa",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Robert DeLanghe <1240090+bdelanghe@users.noreply.github.com>"
+    }
+  }
+}
