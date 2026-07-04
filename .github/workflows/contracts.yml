@@ -1,0 +1,56 @@
+name: contracts
+
+# Keep the Trust Center's inter-repo contract claims in lockstep with the LIVE,
+# signed trellis lattice projection. Fetches status.json + its cosign bundle,
+# VERIFIES the signature (so we only render a projection provably from trellis
+# CI), regenerates the CLAIMS.md block, and commits any drift — the same
+# self-updating pattern the org uses for Cloudflare state. If an edge reds
+# upstream, the matching claim here flips to 🔴 Gap on the next run.
+
+on:
+  schedule:
+    - cron: "0 7 * * *" # daily, after trellis CI has refreshed the status branch
+  workflow_dispatch: {}
+
+permissions:
+  contents: write # commit the regenerated CLAIMS.md
+
+concurrency:
+  group: contracts
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: denoland/setup-deno@667a34cdef165d8d2b2e98dde39547c9daac7282 # v2.0.4
+        with:
+          deno-version: v2.x
+      - uses: sigstore/cosign-installer@d7d6bc7722e3daa8354c50bcb52f4837da5e9b6a # v3.7.0
+
+      - name: fetch + VERIFY the signed trellis status projection
+        run: |
+          base=https://raw.githubusercontent.com/bounded-systems/trellis/status
+          curl -fsSL -o status.json "$base/status.json"
+          curl -fsSL -o status.json.sigstore.json "$base/status.json.sigstore.json"
+          cosign verify-blob --bundle status.json.sigstore.json \
+            --certificate-identity-regexp '^https://github.com/bounded-systems/trellis/' \
+            --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+            status.json
+
+      - name: render the contract claims into CLAIMS.md
+        run: deno run --allow-read --allow-write scripts/render-contracts.mjs status.json
+
+      - name: commit drift
+        run: |
+          rm -f status.json status.json.sigstore.json
+          if git diff --quiet CLAIMS.md; then
+            echo "no drift — CLAIMS.md already matches the live projection"
+          else
+            git config user.name "trust-ci"
+            git config user.email "noreply@bounded.tools"
+            git add CLAIMS.md
+            git commit -m "contracts: sync trellis status ($(date -u +%FT%TZ))"
+            git push
+          fi
