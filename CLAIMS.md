@@ -100,3 +100,28 @@ The meta-claim — *"the public claims match live enforcement"* — is itself tr
 
 When one of these closes, its row above moves grade — and that movement is the
 point of keeping the ledger public.
+
+## Inter-repo contracts (trellis lattice)
+
+Every cross-repo contract trellis maps, graded by its live check. A relational
+wire/pin contract or a unary seam is 🔴 Gap the moment its check reds — the
+same instrument that grades the rest of this ledger.
+
+<!-- trellis:contracts:start -->
+_Generated from the **signed** [trellis](https://github.com/bounded-systems/trellis) status projection — 2/4 verified contracts passing across 73 repos. Do **not** hand-edit: regenerated + signature-verified by `.github/workflows/contracts.yml`. Verify it yourself:_
+
+```sh
+curl -sO https://raw.githubusercontent.com/bounded-systems/trellis/status/status.json
+curl -sO https://raw.githubusercontent.com/bounded-systems/trellis/status/status.json.sigstore.json
+cosign verify-blob --bundle status.json.sigstore.json \
+  --certificate-identity-regexp '^https://github.com/bounded-systems/trellis/' \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com status.json
+```
+
+| # | Contract | Grade | Evidence | Notes |
+|---|---|---|---|---|
+| 1 | The `keeper-wire` wire contract is upheld end-to-end. | 🔴 Gap | `trellis · checks.keeper-wire` · [signed status](https://raw.githubusercontent.com/bounded-systems/trellis/status/status.json) | keeperd's git-signing RPC surface (commit/push/import-and-push/attest-launch/sign/verify/status/getPublicKey). |
+| 2 | The `scout-wire` wire contract is upheld end-to-end. | ✅ Enforced | `trellis · checks.scout-wire` · [signed status](https://raw.githubusercontent.com/bounded-systems/trellis/status/status.json) | scoutd's external-read RPC surface (repo/pr/issue/fetch/download/status). |
+| 3 | The `door-kit-mirror` vendored-pin contract is upheld end-to-end. | 🔴 Gap | `trellis · checks.door-kit-mirror` · [signed status](https://raw.githubusercontent.com/bounded-systems/trellis/status/status.json) | The door-kit client + runtime vendored into each door daemon — must stay byte-identical to door-kit HEAD. |
+| 4 | The `sanctioned-reader-seam` import-boundary contract is upheld end-to-end. | ✅ Enforced | `trellis · checks.sanctioned-reader-seam` · [signed status](https://raw.githubusercontent.com/bounded-systems/trellis/status/status.json) | A 'one sanctioned reader' package upholding its own seam claim (allowed imports + no ambient authority) — a UNARY contract. Wired for fs; env/host/proc/repo-root next. |
+<!-- trellis:contracts:end -->
